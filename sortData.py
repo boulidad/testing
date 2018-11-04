@@ -83,18 +83,24 @@ def main(input_file_name):
     """
     output_file_name=os.path.splitext(input_file_name)[0]+".yaml"
     try:
-        with open(input_file_name) as f:
-            in_data = json.load(f)
+        yaml_file = None
+        with open(input_file_name) as json_file:
+            in_data = json.load(json_file)
         output_dict={}
         tuppeled_keys=build_tupples_zip(in_data)
         init_output_dict(output_dict,tuppeled_keys)
         fill_dict(in_data,output_dict)
-        with open(output_file_name, 'w') as yaml_file:
+        with open(output_file_name, 'wt') as yaml_file:
             yaml.dump(output_dict, yaml_file, default_flow_style=False)
     except (FileNotFoundError) as e:
         print("cannot find file '"+input_file_name+"'") 
     except (json.decoder.JSONDecodeError):
         print("file '"+input_file_name+"' is not in json format")
+    finally:
+        if json_file is not None:
+            json_file.close()
+        if yaml_file is not None:
+            yaml_file.close() 
 
 if __name__ == '__main__':
     if len(sys.argv)!=2:
