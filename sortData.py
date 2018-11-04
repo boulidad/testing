@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """this module reads a file in json format, data structure is presentd below
 and will save a flie in yaml format with the claulated data, based on format2
+the method will overwite output yaml file if exists
 
 input format:
    ppl_ages:
@@ -96,11 +97,6 @@ def main(input_file_name):
         print("cannot find file '"+input_file_name+"'") 
     except (json.decoder.JSONDecodeError):
         print("file '"+input_file_name+"' is not in json format")
-    finally:
-        if json_file is not None:
-            json_file.close()
-        if yaml_file is not None:
-            yaml_file.close() 
 
 if __name__ == '__main__':
     if len(sys.argv)!=2:
